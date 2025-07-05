@@ -1,4 +1,5 @@
-export const baseUrl = import.meta.env.VITE_API_BASE_URL
+export const baseUrlClientSide = process.env.NEXT_PUBLIC_ENV_VARIABLE
+export const baseUrlServerSide = process.env.API_KEY
 
 export const resourceUrl = {
   resource: {

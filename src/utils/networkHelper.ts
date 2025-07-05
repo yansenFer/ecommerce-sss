@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { type AxiosRequestConfig } from 'axios'
-import { baseUrl } from './url'
+import { baseUrlClientSide, baseUrlServerSide } from './url'
 import { IToken } from '@/interface'
 // import type { IUser } from '@/interface'
 
@@ -29,6 +29,7 @@ export function getCookie<T = unknown>(name: string): T | null {
 export const networkHelper = ({
   resource,
   data,
+  isSSR = true,
   param,
   isBlob = false,
   formdata,
@@ -42,6 +43,7 @@ export const networkHelper = ({
   param?: any
   signal?: AbortSignal
   formdata?: boolean
+  isSSR?: boolean
   pdf?: boolean
   isBlob?: boolean
   token?: string
@@ -67,6 +69,8 @@ export const networkHelper = ({
     ...(timeout && { timeout }),
     ...(withCredential && { withCredentials: withCredential }),
   }
+
+  const baseUrl = isSSR ? baseUrlServerSide : baseUrlClientSide
 
   switch (resource.method) {
     case 'POST':
