@@ -58,7 +58,7 @@ export const FooterLayout = () => {
               <div className="flex space-x-3">
                 <div className="bg-black rounded-lg px-4 py-2 flex items-center space-x-2 cursor-pointer hover:bg-gray-800 transition-colors">
                   <Image
-                    src="/placeholder.svg?height=24&width=24"
+                    src=""
                     alt="Apple"
                     width={24}
                     height={24}
@@ -72,7 +72,7 @@ export const FooterLayout = () => {
 
                 <div className="bg-black rounded-lg px-4 py-2 flex items-center space-x-2 cursor-pointer hover:bg-gray-800 transition-colors">
                   <Image
-                    src="/placeholder.svg?height=24&width=24"
+                    src=""
                     alt="Google Play"
                     width={24}
                     height={24}

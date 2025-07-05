@@ -11,7 +11,7 @@ export const resourceUrl = {
     },
     product: {
       read: {
-        endpoints: '',
+        endpoints: '/products',
         method: 'GET',
       },
     },

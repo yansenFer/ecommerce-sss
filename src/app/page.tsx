@@ -2,13 +2,28 @@ import { BannerLayout } from '@/components/BannerLayout'
 import { FooterLayout } from '@/components/FooterLayout'
 import { HeaderLayout } from '@/components/HeaderLayout'
 import { ProductLayout } from '@/components/ProductLayout'
+import { IProduct } from '@/interface'
+import { networkHelper } from '@/utils/networkHelper'
+import { resourceUrl } from '@/utils/url'
 
-export default function Home() {
-  console.log(process.env.API_KEY, 'testing kepanggil ga')
+export default async function Home() {
+  const products: IProduct[] = await networkHelper({
+    resource: resourceUrl.resource.product.read,
+    data: {
+      offset: 0,
+      limit: 20,
+    },
+  }).then((res) => {
+    if (res.status === 200) {
+      return res.data
+    }
+    return []
+  })
+  console.log(products, 'testing kepanggil ga')
   return (
     <main className=" min-h-screen">
       <HeaderLayout />
-      <BannerLayout />
+      <BannerLayout dataProducts={products || []} />
       <ProductLayout />
       <FooterLayout />
     </main>

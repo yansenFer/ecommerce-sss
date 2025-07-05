@@ -2,7 +2,6 @@
 import axios, { type AxiosRequestConfig } from 'axios'
 import { baseUrlClientSide, baseUrlServerSide } from './url'
 import { IToken } from '@/interface'
-// import type { IUser } from '@/interface'
 
 export type resourceObject = {
   endpoints: string
@@ -12,18 +11,7 @@ export type resourceObject = {
 }
 
 export function getCookie<T = unknown>(name: string): T | null {
-  const cookies = document.cookie
-    .split('; ')
-    .find((row) => row.startsWith(name + '='))
-
-  if (!cookies) return null
-
-  try {
-    return JSON.parse(decodeURIComponent(cookies.split('=')[1])) as T
-  } catch (err) {
-    console.error('Failed to parse cookie', err)
-    return null
-  }
+  return null
 }
 
 export const networkHelper = ({

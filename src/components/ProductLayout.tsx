@@ -5,7 +5,7 @@ export const ProductLayout = () => {
     {
       id: 1,
       name: 'Galaxy S22 Ultra',
-      image: '/placeholder.svg?height=200&width=150',
+      image: '',
       originalPrice: '₹74999',
       currentPrice: '₹32999',
       discount: '54% OFF',
@@ -14,7 +14,7 @@ export const ProductLayout = () => {
     {
       id: 2,
       name: 'Galaxy M13 (4GB | 64 GB )',
-      image: '/placeholder.svg?height=200&width=150',
+      image: '',
       originalPrice: '₹14999',
       currentPrice: '₹10499',
       discount: '54% OFF',
@@ -23,7 +23,7 @@ export const ProductLayout = () => {
     {
       id: 3,
       name: 'Galaxy M33 (4GB | 64 GB )',
-      image: '/placeholder.svg?height=200&width=150',
+      image: '',
       originalPrice: '₹24999',
       currentPrice: '₹16999',
       discount: '54% OFF',
@@ -32,7 +32,7 @@ export const ProductLayout = () => {
     {
       id: 4,
       name: 'Galaxy M53 (4GB | 64 GB )',
-      image: '/placeholder.svg?height=200&width=150',
+      image: '',
       originalPrice: '₹40999',
       currentPrice: '₹31999',
       discount: '54% OFF',
@@ -41,7 +41,7 @@ export const ProductLayout = () => {
     {
       id: 5,
       name: 'Galaxy S22 Ultra',
-      image: '/placeholder.svg?height=200&width=150',
+      image: '',
       originalPrice: '₹85999',
       currentPrice: '₹67999',
       discount: '54% OFF',
@@ -50,7 +50,7 @@ export const ProductLayout = () => {
     {
       id: 6,
       name: 'Galaxy S22 Ultra',
-      image: '/placeholder.svg?height=200&width=150',
+      image: '',
       originalPrice: '₹85999',
       currentPrice: '₹67999',
       discount: '54% OFF',
@@ -59,7 +59,7 @@ export const ProductLayout = () => {
     {
       id: 7,
       name: 'Galaxy S22 Ultra',
-      image: '/placeholder.svg?height=200&width=150',
+      image: '',
       originalPrice: '₹85999',
       currentPrice: '₹67999',
       discount: '54% OFF',
@@ -68,7 +68,7 @@ export const ProductLayout = () => {
     {
       id: 8,
       name: 'Galaxy S22 Ultra',
-      image: '/placeholder.svg?height=200&width=150',
+      image: '',
       originalPrice: '₹85999',
       currentPrice: '₹67999',
       discount: '54% OFF',
@@ -77,7 +77,7 @@ export const ProductLayout = () => {
     {
       id: 9,
       name: 'Galaxy S22 Ultra',
-      image: '/placeholder.svg?height=200&width=150',
+      image: '',
       originalPrice: '₹85999',
       currentPrice: '₹67999',
       discount: '54% OFF',
@@ -86,7 +86,7 @@ export const ProductLayout = () => {
     {
       id: 10,
       name: 'Galaxy S22 Ultra',
-      image: '/placeholder.svg?height=200&width=150',
+      image: '',
       originalPrice: '₹85999',
       currentPrice: '₹67999',
       discount: '54% OFF',
@@ -95,7 +95,7 @@ export const ProductLayout = () => {
     {
       id: 11,
       name: 'Galaxy S22 Ultra',
-      image: '/placeholder.svg?height=200&width=150',
+      image: '',
       originalPrice: '₹85999',
       currentPrice: '₹67999',
       discount: '54% OFF',
