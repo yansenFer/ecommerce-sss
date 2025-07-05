@@ -13,11 +13,40 @@ body {
 }
 
 @layer utilities {
-  .scrollbar-hide {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+  .scrollbar-hover {
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+    -ms-overflow-style: none;
+    transition: scrollbar-color 0.3s ease;
   }
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none; /* Chrome, Safari and Opera */
+
+  .scrollbar-hover::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-hover::-webkit-scrollbar-track {
+    background: transparent;
+    transition: background 0.3s ease;
+  }
+
+  .scrollbar-hover::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-radius: 8px;
+    background-clip: content-box;
+    transition: background-color 0.3s ease;
+  }
+
+  .scrollbar-hover:hover {
+    scrollbar-color: #bbb transparent;
+    cursor: pointer;
+  }
+
+  .scrollbar-hover:hover::-webkit-scrollbar-thumb {
+    background-color: #bbb;
+  }
+
+  .scrollbar-hover:hover::-webkit-scrollbar-thumb:hover {
+    background-color: #999;
   }
 }
