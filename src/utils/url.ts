@@ -15,5 +15,11 @@ export const resourceUrl = {
         method: 'GET',
       },
     },
+    categories: {
+      read: {
+        endpoints: '/categories',
+        method: 'GET',
+      },
+    },
   },
 }
