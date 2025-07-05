@@ -57,13 +57,13 @@ export const FooterLayout = () => {
               <h3 className="text-lg font-semibold mb-4">Download App</h3>
               <div className="flex space-x-3">
                 <div className="bg-black rounded-lg px-4 py-2 flex items-center space-x-2 cursor-pointer hover:bg-gray-800 transition-colors">
-                  <Image
+                  {/* <Image
                     src=""
                     alt="Apple"
                     width={24}
                     height={24}
                     className="w-6 h-6"
-                  />
+                  /> */}
                   <div className="text-left">
                     <p className="text-xs text-gray-300">Download on the</p>
                     <p className="text-sm font-semibold">App Store</p>
@@ -71,13 +71,13 @@ export const FooterLayout = () => {
                 </div>
 
                 <div className="bg-black rounded-lg px-4 py-2 flex items-center space-x-2 cursor-pointer hover:bg-gray-800 transition-colors">
-                  <Image
+                  {/* <Image
                     src=""
                     alt="Google Play"
                     width={24}
                     height={24}
                     className="w-6 h-6"
-                  />
+                  /> */}
                   <div className="text-left">
                     <p className="text-xs text-gray-300">GET IT ON</p>
                     <p className="text-sm font-semibold">Google Play</p>

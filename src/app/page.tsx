@@ -1,8 +1,8 @@
-import { BannerLayout } from '@/components/BannerLayout'
-import { FooterLayout } from '@/components/FooterLayout'
-import { HeaderLayout } from '@/components/HeaderLayout'
-import { CategoriesInit } from '@/components/Init/CategoriesInit'
-import { ProductLayout } from '@/components/ProductLayout'
+import { BannerLayout } from '@/components/layouts/BannerLayout'
+import { FooterLayout } from '@/components/layouts/FooterLayout'
+import { HeaderLayout } from '@/components/layouts/HeaderLayout'
+import { CategoriesInit } from '@/components/initials/CategoriesInit'
+import { ProductLayout } from '@/components/layouts/ProductLayout'
 import { ICategory, IProduct } from '@/interface'
 import { networkHelper } from '@/utils/networkHelper'
 import { resourceUrl } from '@/utils/url'
@@ -25,7 +25,6 @@ export default async function Home() {
     resource: resourceUrl.resource.categories.read,
   }).then((res) => {
     if (res.status === 200) {
-      console.log(res.data, 'ini isinya apa')
       return res.data
     }
     return []
@@ -33,10 +32,10 @@ export default async function Home() {
 
   return (
     <main className=" min-h-screen">
-      <CategoriesInit categories={categories} />
+      <CategoriesInit categories={categories || []} />
       <HeaderLayout />
       <BannerLayout dataProducts={products || []} />
-      <ProductLayout />
+      <ProductLayout dataProduct={products || []} />
       <FooterLayout />
     </main>
   )

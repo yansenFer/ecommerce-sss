@@ -8,8 +8,6 @@ export const CategoryLayout = () => {
     (state: RootState) => state.getCategory.dataCategory
   )
 
-  console.log(categoriesStore, 'categories')
-
   return (
     <div className="flex overflow-x-auto scrollbar-hide xl:mx-16 lg:mx-16 md:mx-16 sm:mx-16 mx-3 justify-start flex-row gap-8 items-center">
       <div className="flex flex-row gap-10 items-center">

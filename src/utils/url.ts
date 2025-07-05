@@ -1,4 +1,4 @@
-export const baseUrlClientSide = process.env.NEXT_PUBLIC_ENV_VARIABLE
+export const baseUrlClientSide = process.env.NEXT_PUBLIC_BASE_URL
 export const baseUrlServerSide = process.env.API_KEY
 
 export const resourceUrl = {

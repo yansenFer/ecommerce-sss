@@ -10,7 +10,6 @@ interface BannerLayoutProps {
 }
 
 export const BannerLayout = ({ dataProducts }: BannerLayoutProps) => {
-  console.log(dataProducts, 'data product di banner layout')
   const [slide, setSlide] = useState(1)
   const [imgLoading, setImgLoading] = useState(false)
 
