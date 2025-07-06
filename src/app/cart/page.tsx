@@ -8,12 +8,13 @@ import { FaRegTrashAlt } from 'react-icons/fa'
 import { getStorage } from '@/utils/getStorage'
 import { ICart, IProduct } from '@/interface'
 import { addCommas, removeNonNumeric } from '@/utils/formatNumber'
-import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
 import { setCart } from '@/store/Slice/cartSlice'
+import { useRouter } from 'next/navigation'
 
-export default function Page() {
+export default function CartPage() {
+  const router = useRouter()
   const listcart = getStorage('cart', true) || []
   const listCartGlobalState = useSelector(
     (state: RootState) => state.getCart.listCart
@@ -237,7 +238,7 @@ export default function Page() {
 
                 {deliveryFee > 0 && (
                   <p className="text-sm text-gray-600">
-                    Add ₹{(500 - subtotal).toLocaleString()} more for free
+                    Add ${(500 - subtotal).toLocaleString()} more for free
                     delivery
                   </p>
                 )}
@@ -247,7 +248,10 @@ export default function Page() {
                   <span>${total.toLocaleString()}</span>
                 </div>
 
-                <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg font-semibold">
+                <button
+                  onClick={() => router.push('/checkout?from=cart')}
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg font-semibold"
+                >
                   Proceed to Checkout
                 </button>
 

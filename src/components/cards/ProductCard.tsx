@@ -4,6 +4,7 @@ import { setCart } from '@/store/Slice/cartSlice'
 import { addCommas, removeNonNumeric } from '@/utils/formatNumber'
 import { getStorage } from '@/utils/getStorage'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
@@ -22,7 +23,6 @@ export const ProductCard = ({
 }: ProductCardProps) => {
   const [isLoadImage, setIsLoadImage] = useState(true)
   const dispatch = useDispatch()
-
   //karena didokumentasi apinya tidak ada add cart, jadi sementara disimpan di local storage
   const handleAddCart = (product: IProduct) => {
     // dapetin list cart di local storage
@@ -51,9 +51,10 @@ export const ProductCard = ({
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
         {data.map((product, idx) => (
-          <div
+          <Link
             key={idx}
-            className="bg-white rounded-lg shadow-md  hover:shadow-lg transition-shadow"
+            href={`/product/${product.id}`}
+            className="bg-white rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow"
           >
             <div className="relative p-4">
               {isLoadImage && (
@@ -92,7 +93,7 @@ export const ProductCard = ({
                 </div>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </>
@@ -100,7 +101,8 @@ export const ProductCard = ({
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
         {data?.map((product, idx) => (
-          <div
+          <Link
+            href={`/product/${product.id}`}
             key={idx}
             className="bg-white rounded-lg shadow-md  hover:shadow-lg transition-shadow"
           >
@@ -141,12 +143,13 @@ export const ProductCard = ({
                 </div>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
         {hasNextPage &&
           dataFilter?.length !== 0 &&
           dataFilter?.map((product, idx) => (
-            <div
+            <Link
+              href={`/product/${product.id}`}
               key={idx}
               className="bg-white rounded-lg shadow-md  hover:shadow-lg transition-shadow"
             >
@@ -187,7 +190,7 @@ export const ProductCard = ({
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
       </div>
     </>
