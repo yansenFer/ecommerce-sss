@@ -20,6 +20,9 @@ export const ProductLayout = ({ dataProduct }: ProductProps) => {
   const filterCategory = useSelector(
     (state: RootState) => state.getProduct.filterCategory
   )
+  const searchProduct = useSelector(
+    (state: RootState) => state.getProduct.search
+  )
 
   const fetchingProduction = async (
     context: QueryFunctionContext
@@ -33,6 +36,7 @@ export const ProductLayout = ({ dataProduct }: ProductProps) => {
         offset: pageParam,
         limit: 20,
         ...(filterCategory.id && { categoryId: filterCategory.id }),
+        ...(searchProduct && { title: searchProduct }),
       },
     })
 
@@ -43,28 +47,25 @@ export const ProductLayout = ({ dataProduct }: ProductProps) => {
     return []
   }
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfiniteQuery<IProduct[], Error>({
-      queryKey: ['products', filterCategory],
+      queryKey: ['products', filterCategory, searchProduct],
       queryFn: fetchingProduction,
       //kalau ada filter, page panggil dari awal
       initialPageParam: filterCategory ? 0 : 1,
       getNextPageParam: (lastPage, allPages) => {
         return allPages.length + 1
       },
-      enabled: filterCategory.id ? true : false,
+      enabled: filterCategory.id || searchProduct ? true : false,
     })
 
-  return (
-    <section className="max-w-7xl mx-auto px-4 py-8">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-semibold">
-          All <span className="text-blue-600">Product</span>
-          {filterCategory.name && `: ${filterCategory.name}`}
-        </h2>
-      </div>
-      {/* kalau ada filter, list dari CSR */}
-      {filterCategory.id !== 0 && filterCategory.id !== undefined ? (
+  const handleListProduct = () => {
+    // kalau ada filter category atau search, list product diambil dari data tanstack query metode CSR
+    if (
+      (filterCategory.id !== 0 && filterCategory.id !== undefined) ||
+      searchProduct
+    ) {
+      return (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
             {data?.pages.flat().map((product, idx) => (
@@ -107,7 +108,9 @@ export const ProductLayout = ({ dataProduct }: ProductProps) => {
             ))}
           </div>
         </>
-      ) : (
+      )
+    } else {
+      return (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
             {dataProduct?.map((product, idx) => (
@@ -190,13 +193,23 @@ export const ProductLayout = ({ dataProduct }: ProductProps) => {
               ))}
           </div>
         </>
-      )}
+      )
+    }
+  }
 
-      {isFetchingNextPage && (
-        <div className=" mt-10 flex w-full justify-center">
-          <LoadingDots />
-        </div>
-      )}
+  return (
+    <section className="max-w-7xl mx-auto px-4 py-8">
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-2xl font-semibold">
+          All <span className="text-blue-600">Product</span>
+          {filterCategory.name && `: ${filterCategory.name}`}
+        </h2>
+      </div>
+      {/* list product */}
+
+      {isLoading ? <LoadingDots /> : handleListProduct()}
+
+      {isFetchingNextPage && <LoadingDots />}
 
       <div className="flex w-full justify-center">
         <button

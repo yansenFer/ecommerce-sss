@@ -5,11 +5,13 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 export interface ProductState {
   dataProduct: IProduct[]
   filterCategory: ICategory
+  search: string
 }
 
 const initialState: ProductState = {
   dataProduct: [],
   filterCategory: {},
+  search: '',
 }
 
 export const productSlice = createSlice({
@@ -22,10 +24,13 @@ export const productSlice = createSlice({
     setFilterCategory: (state, action: PayloadAction<ICategory>) => {
       state.filterCategory = action.payload
     },
+    setSearch: (state, action: PayloadAction<string>) => {
+      state.search = action.payload
+    },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setProduct, setFilterCategory } = productSlice.actions
+export const { setProduct, setFilterCategory, setSearch } = productSlice.actions
 
 export default productSlice.reducer

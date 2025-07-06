@@ -1,3 +1,4 @@
+'use client'
 import { FiMapPin } from 'react-icons/fi'
 import { AiOutlineTruck } from 'react-icons/ai'
 import { CiDiscount1 } from 'react-icons/ci'
@@ -6,8 +7,23 @@ import { CiSearch } from 'react-icons/ci'
 import { MdOutlineShoppingCart } from 'react-icons/md'
 import { FaRegUser } from 'react-icons/fa'
 import { CategoryLayout } from './CategoryLayout'
+import { useDispatch } from 'react-redux'
+import { useDebouncedCallback } from 'use-debounce'
+import { setSearch } from '@/store/Slice/productSlice'
 
 export const HeaderLayout = () => {
+  const dispatch = useDispatch()
+
+  //handle search product
+  const debounced = useDebouncedCallback(
+    // function
+    (e) => {
+      dispatch(setSearch(e))
+    },
+    // delay in ms
+    500
+  )
+
   return (
     <header className="w-full">
       {/* Top Header */}
@@ -48,6 +64,7 @@ export const HeaderLayout = () => {
               <div className="relative">
                 <CiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <input
+                  onChange={(e) => debounced(e.currentTarget.value)}
                   type="text"
                   placeholder="Search essentials, groceries and more..."
                   className="pl-10 pr-4 py-2 w-full bg-blue-50 border-blue-50 border-2 transition-all  hover:border-blue-300 hover:border-2 focus:outline-none rounded-lg"
