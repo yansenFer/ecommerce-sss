@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import productReducer from './Slice/productSlice'
 import categoryReducer from './Slice/categorySlice'
+import listCardReducer from './Slice/cartSlice'
 
 export const store = configureStore({
   reducer: {
     getProduct: productReducer,
     getCategory: categoryReducer,
+    getCart: listCardReducer,
   },
 })
 

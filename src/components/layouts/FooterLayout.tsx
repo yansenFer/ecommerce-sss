@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { FaWhatsapp } from 'react-icons/fa'
 import { IoCallOutline } from 'react-icons/io5'
 

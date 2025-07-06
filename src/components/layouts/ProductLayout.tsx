@@ -1,22 +1,19 @@
 'use client'
 
 import { IProduct } from '@/interface'
-import { addCommas, removeNonNumeric } from '@/utils/formatNumber'
 import { networkHelper } from '@/utils/networkHelper'
 import { resourceUrl } from '@/utils/url'
 import { useInfiniteQuery, QueryFunctionContext } from '@tanstack/react-query'
-import Image from 'next/image'
-import { useState } from 'react'
 import { LoadingDots } from '../loading/loading'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
+import { ProductCard } from '../cards/ProductCard'
 
 interface ProductProps {
   dataProduct?: IProduct[]
 }
 
 export const ProductLayout = ({ dataProduct }: ProductProps) => {
-  const [isLoadImage, setIsLoadImage] = useState(true)
   const filterCategory = useSelector(
     (state: RootState) => state.getProduct.filterCategory
   )
@@ -66,133 +63,20 @@ export const ProductLayout = ({ dataProduct }: ProductProps) => {
       searchProduct
     ) {
       return (
-        <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-            {data?.pages.flat().map((product, idx) => (
-              <div
-                key={idx}
-                className="bg-white rounded-lg shadow-md  hover:shadow-lg transition-shadow"
-              >
-                <div className="relative p-4">
-                  {isLoadImage && (
-                    <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-md" />
-                  )}
-                  <Image
-                    src={product.images[0] || '/no-image.png'}
-                    alt={product.title}
-                    width={150}
-                    height={200}
-                    loading="lazy" // ini default, tapi bisa eksplisit
-                    onLoadingComplete={() => setIsLoadImage(false)}
-                    className={`w-full h-48 object-contain mb-4 transition-opacity duration-300 ${
-                      isLoadImage ? 'opacity-0' : 'opacity-100'
-                    }`}
-                  />
-
-                  <h3 className="font-medium line-clamp-1 text-sm mb-2">
-                    {product.title}
-                  </h3>
-                  <div className="space-y-1">
-                    <div className="flex items-center space-x-2">
-                      <span className="text-lg font-bold">
-                        ${' '}
-                        {addCommas(
-                          removeNonNumeric(product.price.toString() || '0'),
-                          false
-                        )}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </>
+        <ProductCard
+          data={data?.pages.flat() || []}
+          hasNextPage={hasNextPage}
+          isDataFilterOrSearch
+        />
       )
     } else {
       return (
-        <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-            {dataProduct?.map((product, idx) => (
-              <div
-                key={idx}
-                className="bg-white rounded-lg shadow-md  hover:shadow-lg transition-shadow"
-              >
-                <div className="relative p-4">
-                  {isLoadImage && (
-                    <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-md" />
-                  )}
-                  <Image
-                    src={product.images[0] || '/no-image.png'}
-                    alt={product.title}
-                    width={150}
-                    height={200}
-                    loading="lazy" // ini default, tapi bisa eksplisit
-                    onLoadingComplete={() => setIsLoadImage(false)}
-                    className={`w-full h-48 object-contain mb-4 transition-opacity duration-300 ${
-                      isLoadImage ? 'opacity-0' : 'opacity-100'
-                    }`}
-                  />
-
-                  <h3 className="font-medium line-clamp-1 text-sm mb-2">
-                    {product.title}
-                  </h3>
-                  <div className="space-y-1">
-                    <div className="flex items-center space-x-2">
-                      <span className="text-lg font-bold">
-                        ${' '}
-                        {addCommas(
-                          removeNonNumeric(product.price.toString() || '0'),
-                          false
-                        )}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-            {hasNextPage &&
-              data?.pages.length !== 0 &&
-              data?.pages.flat().map((product, idx) => (
-                <div
-                  key={idx}
-                  className="bg-white rounded-lg shadow-md  hover:shadow-lg transition-shadow"
-                >
-                  <div className="relative p-4">
-                    {isLoadImage && (
-                      <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-md" />
-                    )}
-                    <Image
-                      src={product.images[0] || '/no-image.png'}
-                      alt={product.title}
-                      width={150}
-                      height={200}
-                      loading="lazy" // ini default, tapi bisa eksplisit
-                      onLoadingComplete={() => setIsLoadImage(false)}
-                      className={`w-full h-48 object-contain mb-4 transition-opacity duration-300 ${
-                        isLoadImage ? 'opacity-0' : 'opacity-100'
-                      }`}
-                    />
-
-                    <h3 className="font-medium line-clamp-1 text-sm mb-2">
-                      {product.title}
-                    </h3>
-                    <div className="space-y-1">
-                      <div className="flex items-center space-x-2">
-                        <span className="text-lg font-bold">
-                          ${' '}
-                          {addCommas(
-                            removeNonNumeric(product.price.toString() || '0'),
-                            false
-                          )}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-          </div>
-        </>
+        <ProductCard
+          data={dataProduct || []}
+          hasNextPage={hasNextPage}
+          isDataFilterOrSearch={false}
+          dataFilter={data?.pages.flat()}
+        />
       )
     }
   }

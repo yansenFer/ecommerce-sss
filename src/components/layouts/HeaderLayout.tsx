@@ -5,16 +5,36 @@ import { CiDiscount1 } from 'react-icons/ci'
 import { RiMenu5Fill } from 'react-icons/ri'
 import { CiSearch } from 'react-icons/ci'
 import { MdOutlineShoppingCart } from 'react-icons/md'
-import { FaRegUser } from 'react-icons/fa'
 import { CategoryLayout } from './CategoryLayout'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useDebouncedCallback } from 'use-debounce'
 import { setSearch } from '@/store/Slice/productSlice'
+import { RootState } from '@/store/store'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { getStorage } from '@/utils/getStorage'
+import { ICart } from '@/interface'
 
 export const HeaderLayout = () => {
   const dispatch = useDispatch()
+  const listCart = useSelector((state: RootState) => state.getCart.listCart)
+  const [countCart, setCountCart] = useState(0)
+  const router = useRouter()
 
-  //handle search product
+  // kalau listcart global state ada perubahan, ambil cart dari local storage lalu disimpan di local state
+  useEffect(() => {
+    const listCart = getStorage('cart', true)
+    console.log(listCart)
+    const totalCart = listCart?.reduce(
+      (acc: number, curr: ICart) => acc + (curr.quantity || 0),
+      0
+    )
+    setCountCart(Number(totalCart))
+  }, [listCart])
+
+  console.log(listCart, '<<')
+
+  //handle search
   const debounced = useDebouncedCallback(
     // function
     (e) => {
@@ -74,15 +94,21 @@ export const HeaderLayout = () => {
 
             {/* Right Side */}
             <div className="flex items-center space-x-6">
-              <div className="flex flex-row items-center gap-3">
-                <FaRegUser className="text-blue-500" />
-                <button className="text-gray-700">Sign Up/Sign in</button>
+              <div className="cursor-pointer">
+                <button
+                  onClick={() => router.push('/cart')}
+                  className="flex cursor-pointer items-center space-x-2 relative"
+                >
+                  <MdOutlineShoppingCart className="w-5 h-5 text-blue-500" />
+                  <span>Cart</span>
+                  <div
+                    hidden={countCart === 0}
+                    className="w-5 h-5 -right-3 -top-2 flex rounded-full items-center justify-center bg-blue-600 absolute"
+                  >
+                    <span className="text-white text-sm">{countCart}</span>
+                  </div>
+                </button>
               </div>
-
-              <button className="flex items-center space-x-2">
-                <MdOutlineShoppingCart className="w-5 h-5 text-blue-500" />
-                <span>Cart</span>
-              </button>
             </div>
           </div>
         </div>

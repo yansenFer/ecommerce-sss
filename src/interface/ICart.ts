@@ -1,10 +1,12 @@
+import { ICategory } from './ICategory'
+
 export interface ICart {
   id: number
-  userId: number
-  date: string
-  products: {
-    productId: number
-    quantity: number
-  }[]
-  __v: number
+  title: string
+  slug: string
+  price: number
+  description: string
+  category: ICategory
+  images: string[]
+  quantity?: number
 }
