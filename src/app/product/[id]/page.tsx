@@ -7,7 +7,6 @@ export type paramsType = Promise<{ id: string }>
 
 export default async function ProductDetailPage(props: { params: paramsType }) {
   const { id } = await props.params
-  console.log(id)
   const product: IProduct = await networkHelper({
     resource: resourceUrl.resource.product.read,
     id: id,
