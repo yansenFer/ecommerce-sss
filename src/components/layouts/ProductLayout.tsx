@@ -44,7 +44,7 @@ export const ProductLayout = ({ dataProduct }: ProductProps) => {
     return []
   }
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery<IProduct[], Error>({
       queryKey: ['products', filterCategory, searchProduct],
       queryFn: fetchingProduction,
@@ -91,8 +91,7 @@ export const ProductLayout = ({ dataProduct }: ProductProps) => {
       </div>
       {/* list product */}
 
-      {isLoading ? <LoadingDots /> : handleListProduct()}
-
+      {handleListProduct()}
       {isFetchingNextPage && <LoadingDots />}
 
       <div className="flex w-full justify-center">

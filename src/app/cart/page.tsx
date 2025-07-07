@@ -12,14 +12,25 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
 import { setCart } from '@/store/Slice/cartSlice'
 import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 export default function CartPage() {
   const router = useRouter()
-  const listcart = getStorage('cart', true) || []
+  const [listcart, setListCart] = useState<ICart[]>([])
   const listCartGlobalState = useSelector(
     (state: RootState) => state.getCart.listCart
   )
-  const totalItem = new Set(listcart.map((cart: IProduct) => cart.id)).size
+
+  useEffect(() => {
+    const listcart = getStorage('cart', true) || []
+    setListCart(listcart)
+  }, [listCartGlobalState])
+
+  const totalItem = new Set(
+    (listCartGlobalState.length !== 0 ? listCartGlobalState : listcart).map(
+      (cart: IProduct) => cart.id
+    )
+  ).size
   const dispatch = useDispatch()
 
   const updateQuantity = (id: number, newQuantity: number) => {
@@ -30,7 +41,6 @@ export default function CartPage() {
         cart.id === id ? { ...cart, quantity: newQuantity } : cart
       )
 
-      console.log(updateCart, 'updatecart')
       localStorage.setItem('cart', JSON.stringify(updateCart))
       dispatch(setCart(updateCart))
     }
@@ -44,7 +54,9 @@ export default function CartPage() {
     dispatch(setCart(removeListCart))
   }
 
-  const subtotal = listcart.reduce(
+  const subtotal = (
+    listCartGlobalState.length !== 0 ? listCartGlobalState : listcart
+  ).reduce(
     (sum: number, item: ICart) => sum + item.price * (item.quantity || 1),
     0
   )
@@ -214,8 +226,11 @@ export default function CartPage() {
                 <div className="flex justify-between">
                   <span>
                     Subtotal (
-                    {listcart.reduce(
-                      (sum: number, item: ICart) => sum + (item.quantity || 0),
+                    {(listCartGlobalState.length !== 0
+                      ? listCartGlobalState
+                      : listcart
+                    ).reduce(
+                      (sum: number, item: ICart) => sum + (item.quantity || 1),
                       0
                     )}{' '}
                     items)
@@ -250,7 +265,7 @@ export default function CartPage() {
 
                 <button
                   onClick={() => router.push('/checkout?from=cart')}
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg font-semibold"
+                  className="w-full bg-blue-600 cursor-pointer hover:bg-blue-700 text-white py-3 text-lg font-semibold"
                 >
                   Proceed to Checkout
                 </button>

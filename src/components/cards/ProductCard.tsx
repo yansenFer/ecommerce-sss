@@ -23,6 +23,7 @@ export const ProductCard = ({
 }: ProductCardProps) => {
   const [isLoadImage, setIsLoadImage] = useState(true)
   const dispatch = useDispatch()
+
   //karena didokumentasi apinya tidak ada add cart, jadi sementara disimpan di local storage
   const handleAddCart = (product: IProduct) => {
     // dapetin list cart di local storage
@@ -66,7 +67,7 @@ export const ProductCard = ({
                 width={150}
                 height={200}
                 loading="lazy" // ini default, tapi bisa eksplisit
-                onLoadingComplete={() => setIsLoadImage(false)}
+                onLoad={() => setIsLoadImage(false)}
                 className={`w-full h-48 rounded-lg object-contain mb-4 transition-opacity duration-300 ${
                   isLoadImage ? 'opacity-0' : 'opacity-100'
                 }`}
@@ -85,7 +86,11 @@ export const ProductCard = ({
                     )}
                   </span>
                   <button
-                    onClick={() => handleAddCart(product)}
+                    onClick={(e) => {
+                      handleAddCart(product)
+                      e.stopPropagation()
+                      e.preventDefault()
+                    }}
                     className="bg-green-700 text-white rounded-lg px-2 cursor-pointer items-center"
                   >
                     Add Cart
@@ -116,7 +121,7 @@ export const ProductCard = ({
                 width={150}
                 height={200}
                 loading="lazy" // ini default, tapi bisa eksplisit
-                onLoadingComplete={() => setIsLoadImage(false)}
+                onLoad={() => setIsLoadImage(false)}
                 className={`w-full h-48 object-contain mb-4 transition-opacity duration-300 ${
                   isLoadImage ? 'opacity-0' : 'opacity-100'
                 }`}
@@ -135,7 +140,11 @@ export const ProductCard = ({
                     )}
                   </span>
                   <button
-                    onClick={() => handleAddCart(product)}
+                    onClick={(e) => {
+                      handleAddCart(product)
+                      e.stopPropagation()
+                      e.preventDefault()
+                    }}
                     className="bg-green-700 text-white rounded-lg px-2 cursor-pointer items-center"
                   >
                     Add Cart
@@ -163,7 +172,7 @@ export const ProductCard = ({
                   width={150}
                   height={200}
                   loading="lazy" // ini default, tapi bisa eksplisit
-                  onLoadingComplete={() => setIsLoadImage(false)}
+                  onLoad={() => setIsLoadImage(false)}
                   className={`w-full h-48 object-contain mb-4 transition-opacity duration-300 ${
                     isLoadImage ? 'opacity-0' : 'opacity-100'
                   }`}
@@ -182,7 +191,11 @@ export const ProductCard = ({
                       )}
                     </span>
                     <button
-                      onClick={() => handleAddCart(product)}
+                      onClick={(e) => {
+                        handleAddCart(product)
+                        e.stopPropagation()
+                        e.preventDefault()
+                      }}
                       className="bg-green-700 text-white rounded-lg px-2 cursor-pointer items-center"
                     >
                       Add Cart

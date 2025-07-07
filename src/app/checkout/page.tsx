@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { BsArrowLeft } from 'react-icons/bs'
@@ -14,13 +14,19 @@ import { RootState } from '@/store/store'
 import { ICart } from '@/interface'
 import { getStorage } from '@/utils/getStorage'
 
-export default function CheckoutPage() {
+export default function Page() {
   const [selectedPayment, setSelectedPayment] = useState('card')
   const [selectedDelivery, setSelectedDelivery] = useState('standard')
   const listCartState = useSelector(
     (state: RootState) => state.getCart.listCart
   )
-  const listCartLocalStorage = getStorage('cart', true)
+  const [listCartLocalStorage, setListCartLocalStorage] = useState<ICart[]>([])
+
+  useEffect(() => {
+    const local = getStorage('cart', true)
+    setListCartLocalStorage(local)
+  }, [])
+
   const searchParams = useSearchParams()
   const from = searchParams.get('from')
 

@@ -24,15 +24,12 @@ export const HeaderLayout = () => {
   // kalau listcart global state ada perubahan, ambil cart dari local storage lalu disimpan di local state
   useEffect(() => {
     const listCart = getStorage('cart', true)
-    console.log(listCart)
     const totalCart = listCart?.reduce(
       (acc: number, curr: ICart) => acc + (curr.quantity || 0),
       0
     )
     setCountCart(Number(totalCart))
   }, [listCart])
-
-  console.log(listCart, '<<')
 
   //handle search
   const debounced = useDebouncedCallback(

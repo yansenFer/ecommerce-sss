@@ -34,12 +34,12 @@ export const BannerLayout = ({ dataProducts }: BannerLayoutProps) => {
               Best Deal Online
             </p>
             <h1 className="xl:text-6xl lg:text-6xl md:text-6xl sm:text-xl text-xl font-bold mb-4">
-              {dataProducts[slide].title}
+              {dataProducts[slide]?.title}
             </h1>
             <p className="xl:text-3xl lg:text-3xl md:text-3xl sm:text-xl text-lg font-semibold text-blue-400">
               Best Price ${' '}
               {addCommas(
-                removeNonNumeric(dataProducts[slide].price.toString() || '0'),
+                removeNonNumeric(dataProducts[slide]?.price.toString() || '0'),
                 false
               )}
             </p>
@@ -47,13 +47,12 @@ export const BannerLayout = ({ dataProducts }: BannerLayoutProps) => {
           <div className="flex-1 flex justify-end">
             <div className="relative w-[300px] h-[300px] flex items-center justify-center">
               <Image
-                src={dataProducts[slide].images[0]}
+                src={dataProducts[slide]?.images[0] || '/no-image.png'}
                 alt="Smart Watch"
                 width={300}
                 height={300}
                 priority={true}
                 className="object-contain rounded-lg"
-                onLoadingComplete={() => setImgLoading(false)}
                 onLoad={() => setImgLoading(false)}
                 onError={() => setImgLoading(false)}
                 style={{ display: imgLoading ? 'none' : 'block' }}

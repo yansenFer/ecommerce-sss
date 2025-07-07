@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { type AxiosRequestConfig } from 'axios'
 import { baseUrlClientSide, baseUrlServerSide } from './url'
-import { IToken } from '@/interface'
 
 export type resourceObject = {
   endpoints: string
@@ -10,52 +9,31 @@ export type resourceObject = {
   header?: any
 }
 
-export function getCookie<T = unknown>(name: string): T | null {
-  return null
-}
-
 export const networkHelper = ({
   resource,
   data,
   isSSR = true,
-  param,
-  isBlob = false,
   formdata,
-  pdf,
-  withCredential,
   timeout,
   id,
 }: {
   resource: resourceObject
   data?: any
-  param?: any
-  signal?: AbortSignal
   formdata?: boolean
   isSSR?: boolean
-  pdf?: boolean
-  isBlob?: boolean
-  token?: string
-  withCredential?: boolean
   timeout?: number
   id?: number | string
 }) => {
   //data user
-  const user = getCookie<IToken>('user')
-  const token = user?.token
 
   const config: AxiosRequestConfig = {
-    ...(pdf ? { responseType: 'arraybuffer' } : {}), // Ensure binary data is received
-    ...(isBlob ? { responseType: 'blob' } : {}),
     headers: {
       ...(resource?.header ? resource.header : {}),
-      ...(token && { Authorization: `Bearer ${token}` }),
       ...(formdata ? { 'Content-Type': 'multipart/form-data' } : {}),
       'ngrok-skip-browser-warning': '69420',
     },
-
     // signal,
     ...(timeout && { timeout }),
-    ...(withCredential && { withCredentials: withCredential }),
   }
 
   const baseUrl = isSSR ? baseUrlServerSide : baseUrlClientSide
@@ -72,32 +50,7 @@ export const networkHelper = ({
     case 'GET':
       return axios
         .get(
-          `${baseUrl}${resource.endpoints}${
-            data ? `?${new URLSearchParams(data).toString()}` : ''
-          }`,
-          config
-        )
-        .catch(errorHandler)
-    case 'PUT':
-      return axios
-        .put(
-          `${baseUrl}${resource.endpoints}${id ? `/${id}` : ''}`,
-          data,
-          config
-        )
-        .catch(errorHandler)
-    case 'PATCH':
-      return axios
-        .patch(
-          `${baseUrl}${resource.endpoints}${id ? `/${id}` : ''}${param || ''}`,
-          data,
-          config
-        )
-        .catch(errorHandler)
-    case 'DELETE':
-      return axios
-        .delete(
-          `${baseUrl}${resource.endpoints}/${id || ''}${
+          `${baseUrl}${resource.endpoints}${id ? `/${id}` : ''}${
             data ? `?${new URLSearchParams(data).toString()}` : ''
           }`,
           config

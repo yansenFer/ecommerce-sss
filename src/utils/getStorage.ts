@@ -1,3 +1,5 @@
+'use client'
+
 export const getStorage = (name: string, isArray: boolean) => {
   if (isArray) {
     const dataRaw = localStorage.getItem(name)
