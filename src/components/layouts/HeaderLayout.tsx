@@ -83,7 +83,7 @@ export const HeaderLayout = () => {
                 <input
                   onChange={(e) => debounced(e.currentTarget.value)}
                   type="text"
-                  placeholder="Search essentials, groceries and more..."
+                  placeholder="Search items..."
                   className="pl-10 pr-4 py-2 w-full bg-blue-50 border-blue-50 border-2 transition-all  hover:border-blue-300 hover:border-2 focus:outline-none rounded-lg"
                 />
               </div>
