@@ -65,7 +65,7 @@ export const networkHelper = ({
 }
 
 const errorHandler = async (error: any) => {
-  console.log(error.response.data.errorList, 'ini error')
+  console.log(error, 'ini error')
 
   return error
 }
